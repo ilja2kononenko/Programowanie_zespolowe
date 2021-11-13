@@ -10,16 +10,14 @@ use App\Config;
  *
  * PHP version 5.4
  */
-abstract class Model
-{
+abstract class Model {
 
     /**
      * Get the PDO database connection
      *
      * @return mixed
      */
-    protected static function getDB()
-    {
+    protected static function getDB() {
         static $db = null;
 
         if ($db === null) {

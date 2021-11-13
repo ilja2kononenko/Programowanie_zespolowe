@@ -2,13 +2,14 @@
 
 namespace App\Controllers\Admin;
 
+use Core\View;
+
 /**
  * User admin controller
  *
  * PHP version 5.4
  */
-class Users extends \Core\Controller
-{
+class Authorization extends \Core\Controller {
 
     /**
      * Before filter
@@ -26,6 +27,10 @@ class Users extends \Core\Controller
      * @return void
      */
     public function indexAction(){
-        echo 'User admin index';
+        echo 'Authorization index';
+    }
+
+    public function loginAction () {
+        View::renderTemplate('Admin/Authorization.html', []);
     }
 }

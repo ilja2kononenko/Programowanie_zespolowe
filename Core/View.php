@@ -18,8 +18,7 @@ class View
      *
      * @return void
      */
-    public static function render($view, $args = [])
-    {
+    public static function render($view, $args = []) {
         extract($args, EXTR_SKIP);
 
         $file = "../App/Views/$view";  // relative to Core directory
@@ -39,8 +38,7 @@ class View
      *
      * @return void
      */
-    public static function renderTemplate($template, $args = [])
-    {
+    public static function renderTemplate($template, $args = []) {
         static $twig = null;
 
         if ($twig === null) {

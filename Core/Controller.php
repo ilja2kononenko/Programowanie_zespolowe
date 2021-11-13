@@ -7,8 +7,13 @@ namespace Core;
  *
  * PHP version 5.4
  */
-abstract class Controller
-{
+abstract class Controller {
+
+    public static function custom_var_dump ($variable) {
+        echo "<pre>";
+        var_dump($variable);
+        echo "</pre>";
+    }
 
     /**
      * Parameters from the matched route
@@ -23,8 +28,7 @@ abstract class Controller
      *
      * @return void
      */
-    public function __construct($route_params)
-    {
+    public function __construct($route_params) {
         $this->route_params = $route_params;
     }
 
@@ -39,8 +43,7 @@ abstract class Controller
      *
      * @return void
      */
-    public function __call($name, $args)
-    {
+    public function __call($name, $args) {
         $method = $name . 'Action';
 
         if (method_exists($this, $method)) {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization</title>
+</head>
+<body>
+
+<div class="authorization_block">
+    <form action="">
+        <h1>Authorization</h1>
+        <div class="input_fields">
+            <div class="input_field">
+                <label for="login">
+                    login
+                </label>
+                <input id="login" type="text">
+            </div>
+            <div class="input_field">
+                <label for="password">
+                    password
+                </label>
+                <input id="password" type="text">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<style>
+
+    html {
+        height: 100%;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    h1 {
+        margin: 0;
+        text-align: center;
+    }
+
+    .authorization_block {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .authorization_block form {
+        padding: 3rem;
+        width: 40vw;
+        height: 40vh;
+        border: #ccc 1px solid;
+        border-radius: 1.5rem;
+        background-color: #ccc;
+    }
+
+    .input_fields {
+        width: 20vw;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 5rem;
+    }
+
+    .input_field {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 1rem;
+        background-color: #fff;
+        border-color: #fff;
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+
+
+</style>
+
+</body>
+</html>

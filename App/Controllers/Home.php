@@ -9,16 +9,14 @@ use \Core\View;
  *
  * PHP version 5.4
  */
-class Home extends \Core\Controller
-{
+class Home extends \Core\Controller {
 
     /**
      * Before filter
      *
      * @return void
      */
-    protected function before()
-    {
+    protected function before() {
         //echo "(before) ";
         //return false;
     }
@@ -28,8 +26,7 @@ class Home extends \Core\Controller
      *
      * @return void
      */
-    protected function after()
-    {
+    protected function after() {
         //echo " (after)";
     }
 
@@ -38,8 +35,7 @@ class Home extends \Core\Controller
      *
      * @return void
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         /*
         View::render('Home/index.php', [
             'name'    => 'Dave',

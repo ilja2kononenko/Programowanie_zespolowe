@@ -7,10 +7,21 @@
 <body>
     <nav>
         <a href="/">Home</a> |
-        <a href="/posts/index">Posts</a>
+        <a href="/posts">Posts</a>
     </nav>
 
     {% block body %}
     {% endblock %}
+
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
 </body>
 </html>
