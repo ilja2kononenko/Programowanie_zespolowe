@@ -9,12 +9,6 @@ namespace Core;
  */
 abstract class Controller {
 
-    public static function custom_var_dump ($variable) {
-        echo "<pre>";
-        var_dump($variable);
-        echo "</pre>";
-    }
-
     /**
      * Parameters from the matched route
      * @var array

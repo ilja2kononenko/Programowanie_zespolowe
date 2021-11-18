@@ -33,9 +33,9 @@ $router = new Core\Router();
 
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('admin', ['namespace' => 'Admin', 'controller' => 'Authorization', 'action' => 'login']);
-$router->add('admin/{controller}', ['namespace' => 'Admin', 'action' => 'index']);
 $router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
+$router->add('admin/{controller}', ['namespace' => 'Admin', 'action' => 'indexAction']);
+$router->add('admin', ['namespace' => 'Admin', 'controller' => 'Authorization', 'action' => 'loginAction']);
 $router->add('{controller}/{action}');
 $router->add('{controller}', ['action' => 'index']);
 $router->add('{controller}/{id:\d+}/{action}');
