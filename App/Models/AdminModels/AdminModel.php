@@ -7,7 +7,9 @@ use Core\Controller;
 use App\Config;
 use PDO;
 
-class AdminModel extends Model{
+class AdminModel extends Model {
+
+    public static $loggedUser;
 
     /**
      * Get all the posts as an associative array
@@ -28,5 +30,7 @@ class AdminModel extends Model{
             echo $e->getMessage();
         }
     }
+
+
 
 }

@@ -38,6 +38,6 @@ $router->add('admin/{controller}', ['namespace' => 'Admin', 'action' => 'indexAc
 $router->add('admin', ['namespace' => 'Admin', 'controller' => 'Authorization', 'action' => 'loginAction']);
 $router->add('{controller}/{action}');
 $router->add('{controller}', ['action' => 'index']);
-$router->add('{controller}/{id:\d+}/{action}');
+$router->add('{controller}/{action}/{id:\d+}');
 
 $router->dispatch($_SERVER['QUERY_STRING']);

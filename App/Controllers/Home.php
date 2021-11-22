@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Product;
+use Core\Utils;
 use \Core\View;
 
 /**
@@ -42,9 +44,13 @@ class Home extends \Core\Controller {
             'colours' => ['red', 'green', 'blue']
         ]);
         */
+
+        $products = Product::getAll();
+
+        //Utils::custom_var_dump($products);
+
         View::renderTemplate('Home/index.html', [
-            'name'    => 'Dave',
-            'colours' => ['red', 'green', 'blue']
+            'products' => $products
         ]);
     }
 }

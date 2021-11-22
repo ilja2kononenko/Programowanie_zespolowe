@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Controllers\User;
+
 /**
  * View
  *
@@ -45,6 +47,21 @@ class View
             $loader = new \Twig_Loader_Filesystem('../App/Views');
             $twig = new \Twig_Environment($loader);
         }
+
+        $loggedUser = User::getLoggedUserInstance();
+        $isUserLogged = User::getUserIsLoggedIn();
+
+        if ($isUserLogged) {
+            $args["loggedUserData"] = array(
+                "name" => $loggedUser['name'],
+                "surname" => $loggedUser['surname'],
+                "money" => $loggedUser['money'],
+                "email" => $loggedUser['email'],
+                "password" => $loggedUser['password'],
+            );
+        }
+
+        $args["isUserLoggedIn"] = $isUserLogged;
 
         echo $twig->render($template, $args);
     }
