@@ -23,6 +23,7 @@ class aproducts extends Controller {
     public function indexAction() {
         if (!Backenduser::getUserIsLoggedIn()) {
             header("Location: http://localhost/admin");
+            return;
         }
 
         View::renderTemplate('Admin/aproducts.html', [

@@ -67,7 +67,7 @@ class authorization extends Controller {
                 return;
             }
 
-            $results = UserModel::registerNewUser($postValues['name'], $postValues['surname'], $postValues['e-mail'], $postValues['password']);
+            $results = UserModel::registerNewUser($postValues['name'], $postValues['surname'], $postValues['email'], $postValues['password']);
 
             if ($results != null && $results != "") {
                 header("Location: http://localhost");

@@ -8,6 +8,7 @@ use Core\View;
 
 class Product extends Controller {
 
+    public $id;
     public $product;
 
     /**
@@ -45,8 +46,14 @@ class Product extends Controller {
         ]);
     }
 
-    public function addToCartProductAction () {
-        echo "test";
+    public function addToCartProductAction ($id) {
+        if (!User::getUserIsLoggedIn()) {
+            header("Location: http://localhost/authorization/login");
+            return;
+        }
+
+        User::addProductToCart($id);
+        header("Location: http://localhost/cart");
     }
 
 }

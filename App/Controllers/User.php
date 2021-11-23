@@ -19,18 +19,29 @@ class User {
 
     public $cart = [];
 
-    public static function getLoggedUserInstance() {
+    public static function getLoggedUserInstance($refresh = false) {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         if (isset($_SESSION['userAccount'])) {
+            if ($refresh) {
+                $newUser = UserModel::getUser($_SESSION['userAccount']->id)[0];
+                User::setLoggedUserInstance($newUser);
+            }
             return $_SESSION['userAccount'];
         }
-        return User::$loggedUserInstance;
+        return null;
     }
 
     public static function getUserIsLoggedIn() {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         if (isset($_SESSION['isUserLoggedIn'])) {
             return $_SESSION['isUserLoggedIn'];
         }
-        return User::$userIsLoggedIn;
+        return false;
     }
 
     public static function setLoggedUserInstance($loggedInUser) {
@@ -53,7 +64,40 @@ class User {
             $_SESSION['userAccount'] = $user;
             $_SESSION['isUserLoggedIn'] = true;
         } else {
-            session_unset();
+            $_SESSION['userAccount'] = null;
+            $_SESSION['isUserLoggedIn'] = false;
+        }
+    }
+
+    public static function getUserCart () {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        if (isset($_SESSION['userCart'])) {
+            return $_SESSION['userCart'];
+        } else return null;
+    }
+
+    public static function addProductToCart ($id) {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        if (isset($_SESSION['isUserLoggedIn'])) {
+
+            $_SESSION['userCart'][] = $id;
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function clearUserCart () {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        if (isset($_SESSION['userCart'])) {
+            $_SESSION['userCart'] = null;
         }
     }
 
