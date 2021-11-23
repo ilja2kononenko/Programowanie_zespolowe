@@ -53,8 +53,7 @@ class User {
             $_SESSION['userAccount'] = $user;
             $_SESSION['isUserLoggedIn'] = true;
         } else {
-            $_SESSION['userAccount'] = null;
-            $_SESSION['isUserLoggedIn'] = false;
+            session_unset();
         }
     }
 

@@ -5,7 +5,7 @@ namespace App\Controllers\Admin;
 use Core\Controller;
 use Core\View;
 
-class amain extends Controller {
+class aorders extends Controller {
 
     /**
      * Before filter
@@ -17,7 +17,10 @@ class amain extends Controller {
         // return false;
     }
 
-    public function indexAction(){
-        View::renderTemplate('Admin/amain.html', []);
+    public function indexAction() {
+        View::renderTemplate('Admin/aorders.html', [
+            "itemactive" => 1
+        ]);
     }
+
 }

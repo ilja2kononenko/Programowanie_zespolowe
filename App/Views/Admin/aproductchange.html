@@ -1,0 +1,33 @@
+{% extends "Adminbase.html" %}
+
+{% block title %}Product change{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4 ms-2">
+    <form action="" method="post">
+        <h2>Product change</h2>
+        <div class="d-flex px-0 mt-5">
+            <div class="mb-3 me-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" value="{{product.title}}" name="title" >
+            </div>
+            <div class="mb-3 me-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" value="{{product.price}}" name="price" >
+            </div>
+        </div>
+        <div class="mb-3 w-50">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" style="resize: none" id="description" name="description" rows="3">
+            {{product.description}}
+        </textarea>
+        </div>
+        <div class="w-50 d-flex justify-content-end">
+            <a href="/admin/aproducts" class="btn btn-light me-3">Cancel</a>
+            <button type="submit" class="btn btn-success">Save changes</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
