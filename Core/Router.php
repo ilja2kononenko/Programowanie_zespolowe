@@ -114,7 +114,7 @@ class Router
 
                 if (is_callable([$controller_object, $action])) {
 
-                    if ($this->params['id']) {
+                    if (isset($this->params['id']) && $this->params['id'] != null) {
                         $controller_object->$action($this->params['id']);
                     } else {
                         $controller_object->$action();

@@ -5,18 +5,23 @@
 {% block body %}
 
 <main class="form-signin">
-    <form method="post" action="loginToShop">
+    <form method="post" action="">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div class="my-5">
             <div class="form-floating">
-                <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input type="email" name="email" class="form-control" id="floatingInput" value="{{post.email}}" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
                 <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
             </div>
+            {% if error != "" %}
+            <div>
+                <p class="text-danger">{{ error }}</p>
+            </div>
+            {% endif %}
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>

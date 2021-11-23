@@ -45,19 +45,23 @@ class View
 
         if ($twig === null) {
             $loader = new \Twig_Loader_Filesystem('../App/Views');
-            $twig = new \Twig_Environment($loader);
+            $twig = new \Twig_Environment($loader, [
+                'debug' => true,
+            ]);
         }
+
+        $twig->addExtension(new \Twig_Extension_Debug());
 
         $loggedUser = User::getLoggedUserInstance();
         $isUserLogged = User::getUserIsLoggedIn();
 
         if ($isUserLogged) {
             $args["loggedUserData"] = array(
-                "name" => $loggedUser['name'],
-                "surname" => $loggedUser['surname'],
-                "money" => $loggedUser['money'],
-                "email" => $loggedUser['email'],
-                "password" => $loggedUser['password'],
+                "name" => $loggedUser->name,
+                "surname" => $loggedUser->surname,
+                "money" => $loggedUser->money,
+                "email" => $loggedUser->email,
+                "password" => $loggedUser->password,
             );
         }
 

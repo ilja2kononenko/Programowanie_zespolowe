@@ -8,6 +8,8 @@ use Core\View;
 
 class Product extends Controller {
 
+    public $product;
+
     /**
      * Before filter
      *
@@ -34,13 +36,17 @@ class Product extends Controller {
      */
     public function showAction($id) {
 
-        $product = \App\Models\Product::getProduct($id);
+        $this->product = \App\Models\Product::getProduct($id)[0];
 
         //Utils::custom_var_dump($product);
 
         View::renderTemplate('Product/index.html', [
-            'product' => $product
+            'product' => $this->product
         ]);
+    }
+
+    public function addToCartProductAction () {
+        echo "test";
     }
 
 }

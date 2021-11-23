@@ -11,14 +11,6 @@ use Core\View;
 class authorization extends Controller {
 
     public function loginAction() {
-        View::renderTemplate('authorization/login.html', []);
-    }
-
-    public function registerAction () {
-        View::renderTemplate('authorization/register.html', []);
-    }
-
-    public function loginToShopAction () {
         if ($_POST != null) {
 
             $postValues = $_POST;
@@ -36,29 +28,43 @@ class authorization extends Controller {
                 }
             }
 
+            View::renderTemplate('authorization/login.html', [
+                "post" => $_POST,
+                "error" => "Wrong email or password!"
+            ]);
 
+        } else {
+            View::renderTemplate('authorization/login.html', []);
         }
-        //View::renderTemplate('AdminModel/Authorization.html', []);
+
     }
 
-    public function registerToShopAction () {
+    public function registerAction () {
         if ($_POST != null) {
 
             $postValues = $_POST;
 
             //Utils::custom_var_dump($postValues);
 
-            if ($postValues['password'] !== $postValues['confirm_password']) {
-                echo "not same password!";
-            }
-
             $users = UserModel::getLoginUsersData();
 
             foreach ($users as $user) {
                 if ($postValues['email'] === $user['email']) {
 
-                    header("Location: http://localhost");
+                    View::renderTemplate('authorization/register.html', [
+                        "post" => $_POST,
+                        "error" => "User with given email already exists!"
+                    ]);
+                    return;
                 }
+            }
+
+            if ($postValues['password'] !== $postValues['confirm_password']) {
+                View::renderTemplate('authorization/register.html', [
+                    "post" => $_POST,
+                    "error" => "Passwords are not same!"
+                ]);
+                return;
             }
 
             $results = UserModel::registerNewUser($postValues['name'], $postValues['surname'], $postValues['e-mail'], $postValues['password']);
@@ -67,7 +73,21 @@ class authorization extends Controller {
                 header("Location: http://localhost");
             }
 
+        } else {
+            View::renderTemplate('authorization/register.html', []);
         }
+
+
+    }
+
+    public function logOutAction () {
+        User::setLoggedUserInstance(null);
+
+        header("Location: http://localhost");
+    }
+
+    public function registerToShopAction () {
+
         //View::renderTemplate('AdminModel/Authorization.html', []);
     }
 

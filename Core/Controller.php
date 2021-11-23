@@ -55,8 +55,10 @@ abstract class Controller {
      *
      * @return void
      */
-    protected function before()
-    {
+    protected function before() {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
     }
 
     /**

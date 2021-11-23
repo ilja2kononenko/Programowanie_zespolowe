@@ -19,6 +19,7 @@ class Home extends \Core\Controller {
      * @return void
      */
     protected function before() {
+        parent::before();
         //echo "(before) ";
         //return false;
     }
@@ -47,7 +48,7 @@ class Home extends \Core\Controller {
 
         $products = Product::getAll();
 
-        //Utils::custom_var_dump($products);
+        //Utils::custom_var_dump($_SESSION);
 
         View::renderTemplate('Home/index.html', [
             'products' => $products
