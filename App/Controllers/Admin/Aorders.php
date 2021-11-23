@@ -13,11 +13,16 @@ class aorders extends Controller {
      * @return void
      */
     protected function before() {
-        // Make sure an admin user is logged in for example
-        // return false;
+        if (!Backenduser::getUserIsLoggedIn()) {
+            header("Location: http://localhost/admin");
+        }
     }
 
     public function indexAction() {
+        if (!Backenduser::getUserIsLoggedIn()) {
+            header("Location: http://localhost/admin");
+        }
+
         View::renderTemplate('Admin/aorders.html', [
             "itemactive" => 1
         ]);

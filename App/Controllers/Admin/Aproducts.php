@@ -15,11 +15,16 @@ class aproducts extends Controller {
      * @return void
      */
     protected function before() {
-        // Make sure an admin user is logged in for example
-        // return false;
+        if (!Backenduser::getUserIsLoggedIn()) {
+            header("Location: http://localhost/admin");
+        }
     }
 
     public function indexAction() {
+        if (!Backenduser::getUserIsLoggedIn()) {
+            header("Location: http://localhost/admin");
+        }
+
         View::renderTemplate('Admin/aproducts.html', [
             'itemactive' => 2,
             'products' => Product::getAll()

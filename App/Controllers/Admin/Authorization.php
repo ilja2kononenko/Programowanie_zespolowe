@@ -21,8 +21,7 @@ class Authorization extends Controller {
      * @return void
      */
     protected function before() {
-        // Make sure an admin user is logged in for example
-        // return false;
+
     }
 
     /**
@@ -35,6 +34,9 @@ class Authorization extends Controller {
     }
 
     public function loginAction () {
+        if (Backenduser::getUserIsLoggedIn()) {
+            header("Location: http://localhost/admin/amain");
+        }
         View::renderTemplate('Admin/Authorization.html', []);
     }
 
@@ -46,6 +48,8 @@ class Authorization extends Controller {
 
             Utils::custom_var_dump($postValues);
             Utils::custom_var_dump($loginValues);
+
+            Backenduser::setLoggedBackendUserInstance();
 
             if ($postValues['login'] === $loginValues['login'] && $postValues['password'] === $loginValues['password']) {
                 header("Location: http://localhost/Admin/amain");

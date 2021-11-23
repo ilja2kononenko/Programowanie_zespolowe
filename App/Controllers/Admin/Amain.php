@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use Core\Controller;
+use Core\Utils;
 use Core\View;
 
 class amain extends Controller {
@@ -13,11 +14,14 @@ class amain extends Controller {
      * @return void
      */
     protected function before() {
-        // Make sure an admin user is logged in for example
-        // return false;
+
     }
 
     public function indexAction(){
+        if (!Backenduser::getUserIsLoggedIn()) {
+            header("Location: http://localhost/admin");
+        }
+
         View::renderTemplate('Admin/amain.html', [
             "itemactive" => 0
         ]);
