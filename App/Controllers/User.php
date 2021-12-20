@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Client;
+use App\Models\OrderGroup;
 use Core\Controller;
 use Core\Utils;
 
@@ -78,6 +79,21 @@ class User {
         if (isset($_SESSION['userCart'])) {
             return $_SESSION['userCart'];
         } else return null;
+    }
+
+    public static function getUserOrderGroups () {
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        $user = self::getLoggedUserInstance();
+        if ($user != null) {
+            $orderGroups = OrderGroup::getOrderGroupsByUserId($user->id);
+
+            return $orderGroups;
+        } else {
+            return null;
+        }
     }
 
     public static function addProductToCart ($id) {

@@ -92,6 +92,49 @@ class OrderGroup extends Model {
         }
     }
 
+    public static function getOrderGroupsByUserId($user_id) {
+
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->query('SELECT * FROM ordergroup where user_id ='.$user_id.';');
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $orderGroups = [];
+
+            foreach ($results as $ordergroup) {
+                $sum = 0;
+                $orderGroup = new OrderGroup();
+
+                $orderGroup->id = $ordergroup['id'];
+
+                $orderGroup->client = Client::getClient($ordergroup['user_id']);
+
+                $order_items = OrderGroup::getOrderGroupOrders($ordergroup['id']);
+
+                foreach ($order_items as $order_item) {
+                    $product_id = $order_item['item_id'];
+                    $product = (array) Product::getProduct($product_id);
+
+                    $product['order_item_id'] = $order_item['id'];
+                    $product['status'] = $order_item['status'];
+                    $orderGroup->order_items[] = $product;
+
+                    $sum += $product['price'];
+                }
+
+                $orderGroup->sum = $sum;
+
+                $orderGroups[] = $orderGroup;
+            }
+
+            return $orderGroups;
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function getOrderByOrderItemId($id) {
 
         try {

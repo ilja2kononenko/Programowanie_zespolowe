@@ -123,4 +123,18 @@ class Client extends Model {
         }
     }
 
+    public function getBoughtProducts () {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->query('SELECT * FROM users');
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $results;
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
 }
