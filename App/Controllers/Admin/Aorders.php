@@ -47,30 +47,34 @@ class aorders extends Controller {
     }
 
     public function showAction ($id) {
+        $orderGroup = OrderGroup::getOrderGroupById($id);
+        $products = $orderGroup->order_items;
+
+        $client = $orderGroup->client;
+
         if ($_POST != null) {
 
             $postValues = $_POST;
 
-            Product::changeProduct($id, $postValues['title'], $postValues['price'], $postValues['description']);
+            if ($postValues['action'] == 'duplicate') {
+                $orderGroup->duplicateItem($postValues['order_item_id']);
+            } else if ($postValues['action'] == 'delete') {
+                $orderGroup->removeItem($postValues['order_item_id']);
+            } else if ($postValues['action'] == 'change_status') {
+                $orderGroup->changeOrderItemStatus($postValues['order_item_id'], $postValues['status']);
+            }
 
-            header("Location: http://localhost/admin/aproducts");
-
-        } else {
-
-            $orderGroup = OrderGroup::getOrderGroupById($id);
-            $products = $orderGroup->order_items;
-
-            $client = $orderGroup->client;
-
-            //Utils::custom_var_dump($product);
-
-            View::renderTemplate('Admin/aordergroup.html', [
-                'itemactive' => 2,
-                'orderGroupId' => $id,
-                'products' => $products,
-                'client' => (array) $client
-            ]);
+            unset($_POST);
+            header("Location: ".$_SERVER['HTTP_REFERER']);
         }
+
+        View::renderTemplate('Admin/aordergroup.html', [
+            'itemactive' => 2,
+            'orderGroupId' => $id,
+            'products' => $products,
+            'client' => (array) $client
+        ]);
+
 
     }
 

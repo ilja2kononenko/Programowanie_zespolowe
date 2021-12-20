@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="table-responsive col-8 ps-3 pt-3">
+    <div class="table-responsive col-8 ps-3 pt-3 overflow-auto" style="height: 600px">
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -34,9 +34,9 @@
             {% for product in products %}
 
             <tr>
-                <td>
-                    {{product.id}}
-                </td>
+                <th scope="row">
+                    {{product.order_item_id}}
+                </th>
                 <td>
                     {{product.title}}
                 </td>
@@ -47,8 +47,26 @@
                     {{product.description}}
                 </td>
                 <td>
-                    <a href="/admin/aorders/duplicate/{{orderGroupId}}/{{product.id}}" class="btn btn-primary">Duplicate</a>
-                    <a href="/admin/aorders/delete/{{orderGroupId}}/{{product.id}}" type="button" class="btn btn-danger">Delete</a>
+                    <form action="" method="post">
+                        <input type="hidden" name="order_item_id" value="{{product.order_item_id}}">
+                        <input type="hidden" name="action" value="change_status">
+
+                        <select class="form-select mb-3" name="status">
+                            <option value="paid" {% if product.status == 'paid' %} selected {% endif %} >Paid</option>
+                            <option value="preprocess" {% if product.status == 'preprocess' %} selected {% endif %} >Preprocess</option>
+                            <option value="packing" {% if product.status == 'packing' %} selected {% endif %} >Packing</option>
+                            <option value="sent" {% if product.status == 'sent' %} selected {% endif %} >Sent</option>
+                        </select>
+                    </form>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="order_item_id" value="{{product.order_item_id}}">
+                        <input type="hidden" name="action" value="">
+
+                        <button type="button" class="btn btn-primary" onclick="custom_submit('duplicate'); $(this).parent('form').submit();">Duplicate</button>
+
+                        <button type="button" class="btn btn-danger" onclick="custom_submit('delete'); $(this).parent('form').submit();">Delete</button>
+                    </form>
                 </td>
             </tr>
 
@@ -59,6 +77,19 @@
     </div>
 
 </div>
+
+<script>
+    function custom_submit(text) {
+        $('input[name="action"]').val(text);
+    }
+
+    $(document).ready(function () {
+        $('select').on('change', function () {
+
+            $(this).parent('form').submit();
+        })
+    })
+</script>
 
 
 {% endblock %}

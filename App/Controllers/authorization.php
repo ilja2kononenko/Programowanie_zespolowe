@@ -33,6 +33,8 @@ class authorization extends Controller {
                 "error" => "Wrong email or password!"
             ]);
 
+            unset($_POST);
+
         } else {
             View::renderTemplate('authorization/login.html', []);
         }

@@ -41,6 +41,8 @@ class aproducts extends Controller {
 
             header("Location: http://localhost/admin/aproducts");
 
+            unset($_POST);
+
         } else {
 
             View::renderTemplate('Admin/aproductchange.html', [
@@ -58,6 +60,8 @@ class aproducts extends Controller {
             Product::changeProduct($id, $postValues['title'], $postValues['price'], $postValues['description']);
 
             header("Location: http://localhost/admin/aproducts");
+
+            unset($_POST);
 
         } else {
             $this->product = \App\Models\Product::getProduct($id);

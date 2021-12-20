@@ -54,6 +54,8 @@ class Authorization extends Controller {
             if ($postValues['login'] === $loginValues['login'] && $postValues['password'] === $loginValues['password']) {
                 header("Location: http://localhost/Admin/amain");
             }
+
+            unset($_POST);
         }
         //View::renderTemplate('AdminModel/Authorization.html', []);
     }

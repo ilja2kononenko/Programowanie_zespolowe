@@ -42,6 +42,8 @@ class acustomers extends Controller {
 
             header("Location: http://localhost/admin/acustomers");
 
+            unset($_POST);
+
         } else {
 
             View::renderTemplate('Admin/acustomerchange.html', [
@@ -59,6 +61,8 @@ class acustomers extends Controller {
             Client::changeUser($postValues['name'], $postValues['surname'], $postValues['money'], $postValues['email'], $postValues['password'], $id);
 
             header("Location: http://localhost/admin/acustomers");
+
+            unset($_POST);
 
         } else {
             $this->user = \App\Models\Client::getClient($id);

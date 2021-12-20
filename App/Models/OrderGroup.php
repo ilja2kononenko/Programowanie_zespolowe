@@ -58,7 +58,7 @@ class OrderGroup extends Model {
         try {
             $db = static::getDB();
 
-            $stmt = $db->query('SELECT * FROM ordergroup;');
+            $stmt = $db->query('SELECT * FROM ordergroup where id ='.$id.';');
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $orderGroup_result = $results[0];
@@ -74,10 +74,13 @@ class OrderGroup extends Model {
 
             foreach ($order_items as $order_item) {
                 $product_id = $order_item['item_id'];
-                $product = Product::getProduct($product_id);
+                $product = (array) Product::getProduct($product_id);
+
+                $product['order_item_id'] = $order_item['id'];
+                $product['status'] = $order_item['status'];
                 $orderGroup->order_items[] = $product;
 
-                $sum += $product->price;
+                $sum += $product['price'];
             }
 
             $orderGroup->sum = $sum;
@@ -89,15 +92,15 @@ class OrderGroup extends Model {
         }
     }
 
-    public static function getOrders() {
+    public function getOrderByOrderItemId($id) {
 
         try {
             $db = static::getDB();
 
-            $stmt = $db->query('SELECT * FROM order_item;');
+            $stmt = $db->query('SELECT * FROM order_item where id = '. $id .';');
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $results;
+            return $results[0];
 
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -109,7 +112,7 @@ class OrderGroup extends Model {
         try {
             $db = static::getDB();
 
-            $stmt = $db->query('SELECT * FROM order_item where id = '.$order_group_id.';');
+            $stmt = $db->query('SELECT * FROM order_item where ordergroup_id = '.$order_group_id.';');
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $results;
@@ -139,10 +142,47 @@ class OrderGroup extends Model {
 
     }
 
+    public function duplicateItem ($item_id) {
+        try {
+            $db = static::getDB();
+
+            $order_item = $this->getOrderByOrderItemId($item_id);
+
+            $stmt = $db->prepare("INSERT INTO order_item (item_id, ordergroup_id, status) VALUES (?, ?, ?);");
+            $stmt->execute( array($order_item['item_id'], $this->id, $order_item['status']));
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function removeItem ($item_id) {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("DELETE FROM order_item WHERE id = ?;");
+            $stmt->execute( array($item_id));
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function getClient () {
         return $this->client;
     }
 
+    public function changeOrderItemStatus($item_id, $status) {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("UPDATE order_item set status = ? where id = ?;");
+            $stmt->execute( array($status, $item_id));
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 
 
 }
