@@ -1,0 +1,64 @@
+{% extends "Adminbase.html" %}
+
+{% block title %}Order group{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Order group # {{orderGroupId}}</h1>
+<a class="btn btn-danger mb-3 ms-3" href="/admin/aorders">Back</a>
+<div class="d-flex">
+
+    <div class="col-4 ps-3">
+        <div class="p-3 border rounded-4">
+            <h5>Client info</h5>
+            <p>Name:
+                <span>{{client.name}}</span>
+                <span>{{client.surname}}</span>
+            </p>
+            <p>E-mail: <span>{{client.email}}</span></p>
+        </div>
+    </div>
+
+    <div class="table-responsive col-8 ps-3 pt-3">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">title</th>
+                <th scope="col">price</th>
+                <th scope="col">description</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for product in products %}
+
+            <tr>
+                <td>
+                    {{product.id}}
+                </td>
+                <td>
+                    {{product.title}}
+                </td>
+                <td>
+                    {{product.price}}
+                </td>
+                <td>
+                    {{product.description}}
+                </td>
+                <td>
+                    <a href="/admin/aorders/duplicate/{{orderGroupId}}/{{product.id}}" class="btn btn-primary">Duplicate</a>
+                    <a href="/admin/aorders/delete/{{orderGroupId}}/{{product.id}}" type="button" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+{% endblock %}

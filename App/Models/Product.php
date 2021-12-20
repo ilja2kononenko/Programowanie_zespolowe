@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use Core\Utils;
 use PDO;
 
 class Product extends \Core\Model {
+
+    public $id;
+    public $title;
+    public $price;
+    public $description;
 
     /**
      * Get all the posts as an associative array
@@ -30,10 +36,19 @@ class Product extends \Core\Model {
         try {
             $db = static::getDB();
 
+            $product = new Product();
+
             $stmt = $db->query('SELECT * FROM products where id = '.$id.';');
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $results;
+            $product_result = $results[0];
+
+            $product->id = $product_result['id'];
+            $product->title = $product_result['title'];
+            $product->price = $product_result['price'];
+            $product->description = $product_result['description'];
+
+            return $product;
 
         } catch (PDOException $e) {
             echo $e->getMessage();

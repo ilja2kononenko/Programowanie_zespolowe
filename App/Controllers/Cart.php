@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\OrderGroup;
 use App\Models\Product;
-use App\Models\UserModel;
+use App\Models\Client;
 use Core\Controller;
 use Core\Utils;
 use Core\View;
@@ -24,9 +24,9 @@ class Cart extends Controller {
 
         if ($productIdsInUserCart != null) {
             foreach ($productIdsInUserCart as $productId) {
-                $product = Product::getProduct($productId)[0];
-                $userCart[] = $product;
-                $sum += $product['price'];
+                $product = Product::getProduct($productId);
+                $userCart[] = (array) $product;
+                $sum += $product->price;
             }
         }
 
@@ -48,9 +48,9 @@ class Cart extends Controller {
 
         if ($productIdsInUserCart != null) {
             foreach ($productIdsInUserCart as $productId) {
-                $product = Product::getProduct($productId)[0];
-                $userCart[] = $product;
-                $sum += $product['price'];
+                $product = Product::getProduct($productId);
+                $userCart[] = (array) $product;
+                $sum += $product->price;
             }
         }
 
@@ -63,7 +63,7 @@ class Cart extends Controller {
 
             $newAmountOfMoney = $userInstance->money - $sum;
 
-            UserModel::setAmountOfMoney($newAmountOfMoney, $userInstance->id);
+            Client::setAmountOfMoney($newAmountOfMoney, $userInstance->id);
 
             User::clearUserCart();
 

@@ -7,7 +7,14 @@ use Core\Utils;
 use PDO;
 use PDOException;
 
-class UserModel extends Model{
+class Client extends Model {
+
+    public $id;
+    public $name;
+    public $surname;
+    public $money;
+    public $email;
+    public $password;
 
     public static function getLoginUsersData() {
 
@@ -66,14 +73,24 @@ class UserModel extends Model{
         }
     }
 
-    public static function getUser ($id) {
+    public static function getClient ($id) {
         try {
             $db = static::getDB();
 
             $stmt = $db->query('SELECT * FROM users where id = '.$id.';');
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $results;
+            $client_result = $results[0];
+
+            $client = new Client();
+            $client->id = $client_result['id'];
+            $client->name = $client_result['name'];
+            $client->surname= $client_result['surname'];
+            $client->money = $client_result['money'];
+            $client->email = $client_result['email'];
+            $client->password = $client_result['password'];
+
+            return $client;
 
         } catch (PDOException $e) {
             echo $e->getMessage();

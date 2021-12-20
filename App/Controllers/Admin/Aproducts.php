@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Product;
-use App\Models\UserModel;
+use App\Models\Client;
 use Core\Controller;
 use Core\View;
 
@@ -60,13 +60,13 @@ class aproducts extends Controller {
             header("Location: http://localhost/admin/aproducts");
 
         } else {
-            $this->product = \App\Models\Product::getProduct($id)[0];
+            $this->product = \App\Models\Product::getProduct($id);
 
             //Utils::custom_var_dump($product);
 
             View::renderTemplate('Admin/aproductchange.html', [
                 'itemactive' => 2,
-                'product' => $this->product
+                'product' => (array) $this->product
             ]);
         }
 

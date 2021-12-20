@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\Client;
 use Core\Controller;
 use Core\Utils;
 
@@ -26,7 +26,7 @@ class User {
 
         if (isset($_SESSION['userAccount'])) {
             if ($refresh) {
-                $newUser = UserModel::getUser($_SESSION['userAccount']->id)[0];
+                $newUser = Client::getClient($_SESSION['userAccount']->id);
                 User::setLoggedUserInstance($newUser);
             }
             return $_SESSION['userAccount'];
@@ -50,6 +50,8 @@ class User {
         }
 
         if ($loggedInUser != null) {
+            $loggedInUser = (array) $loggedInUser;
+
             $user = new User();
             $user->id = $loggedInUser['id'];
             $user->name = $loggedInUser['name'];

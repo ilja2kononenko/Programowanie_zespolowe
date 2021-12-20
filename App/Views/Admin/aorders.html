@@ -4,6 +4,41 @@
 
 {% block body %}
 
+<div class="table-responsive w-100 ps-3 pt-3">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">client</th>
+            <th scope="col">price</th>
+            <th scope="col">actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for orderGroup in orderGroups %}
+
+        <tr>
+            <td>
+                {{orderGroup.id}}
+            </td>
+            <td>
+                {{orderGroup.client}}
+            </td>
+            <td>
+                {{orderGroup.sum}}
+            </td>
+            <td>
+                <a href="aorders/show/{{orderGroup.id}}" class="btn btn-success">Show details</a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
 
 
 {% endblock %}

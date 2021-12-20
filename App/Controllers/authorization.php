@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AdminModels\AdminModel;
-use App\Models\UserModel;
+use App\Models\Client;
 use Core\Controller;
 use Core\Utils;
 use Core\View;
@@ -14,7 +14,7 @@ class authorization extends Controller {
         if ($_POST != null) {
 
             $postValues = $_POST;
-            $users = UserModel::getLoginUsersData();
+            $users = Client::getLoginUsersData();
 
 //            Utils::custom_var_dump($postValues);
 //            Utils::custom_var_dump($users);
@@ -46,7 +46,7 @@ class authorization extends Controller {
 
             //Utils::custom_var_dump($postValues);
 
-            $users = UserModel::getLoginUsersData();
+            $users = Client::getLoginUsersData();
 
             foreach ($users as $user) {
                 if ($postValues['email'] === $user['email']) {
@@ -67,7 +67,7 @@ class authorization extends Controller {
                 return;
             }
 
-            $results = UserModel::registerNewUser($postValues['name'], $postValues['surname'], $postValues['email'], $postValues['password']);
+            $results = Client::registerNewUser($postValues['name'], $postValues['surname'], $postValues['email'], $postValues['password']);
 
             if ($results != null && $results != "") {
                 header("Location: http://localhost");

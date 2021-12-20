@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Product;
-use App\Models\UserModel;
+use App\Models\Client;
 use Core\Controller;
 use Core\Utils;
 use Core\View;
@@ -29,7 +29,7 @@ class acustomers extends Controller {
 
         View::renderTemplate('Admin/acustomers.html', [
             "itemactive" => 3,
-            'users' => UserModel::getAllUsers()
+            'users' => Client::getAllUsers()
         ]);
     }
 
@@ -38,7 +38,7 @@ class acustomers extends Controller {
 
             $postValues = $_POST;
 
-            UserModel::registerNewUser($postValues['name'], $postValues['surname'], $postValues['email'], $postValues['password']);
+            Client::registerNewUser($postValues['name'], $postValues['surname'], $postValues['email'], $postValues['password']);
 
             header("Location: http://localhost/admin/acustomers");
 
@@ -56,18 +56,18 @@ class acustomers extends Controller {
 
             $postValues = $_POST;
 
-            UserModel::changeUser($postValues['name'], $postValues['surname'], $postValues['money'], $postValues['email'], $postValues['password'], $id);
+            Client::changeUser($postValues['name'], $postValues['surname'], $postValues['money'], $postValues['email'], $postValues['password'], $id);
 
             header("Location: http://localhost/admin/acustomers");
 
         } else {
-            $this->user = \App\Models\UserModel::getUser($id)[0];
+            $this->user = \App\Models\Client::getClient($id);
 
             //Utils::custom_var_dump($product);
 
             View::renderTemplate('Admin/acustomerchange.html', [
                 'itemactive' => 3,
-                'user' => $this->user
+                'user' => (array) $this->user
             ]);
         }
 
@@ -75,7 +75,7 @@ class acustomers extends Controller {
 
     public function deleteAction ($id) {
 
-        UserModel::deleteUser($id);
+        Client::deleteUser($id);
 
         header("Location: http://localhost/admin/acustomers");
 

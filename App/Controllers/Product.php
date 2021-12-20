@@ -37,12 +37,12 @@ class Product extends Controller {
      */
     public function showAction($id) {
 
-        $this->product = \App\Models\Product::getProduct($id)[0];
+        $this->product = \App\Models\Product::getProduct($id);
 
         //Utils::custom_var_dump($product);
 
         View::renderTemplate('Product/index.html', [
-            'product' => $this->product
+            'product' => (array) $this->product
         ]);
     }
 
