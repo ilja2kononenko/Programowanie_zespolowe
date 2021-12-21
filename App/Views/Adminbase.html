@@ -14,7 +14,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
+        <div class="nav-item text-nowrap d-flex">
             <a class="nav-link px-3" href="/">Go to shop</a>
         </div>
     </div>
@@ -38,25 +38,32 @@
                     Dashboard
                 </a>
             </li>
-            <li>
+            <li class="{% if backendUserRole != 'worker' and backendUserRole != 'admin' %} d-none {% endif %}">
                 <a href="/admin/aorders" class="nav-link text-white {% if itemactive == 1 %} active {% endif %}">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                     Orders
                 </a>
             </li>
-            <li>
+            <li class="{% if backendUserRole != 'merchant' and backendUserRole != 'admin' %} d-none {% endif %}">
                 <a href="/admin/aproducts" class="nav-link text-white {% if itemactive == 2 %} active {% endif %}">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                     Products
                 </a>
             </li>
-            <li>
+            <li class="{% if backendUserRole != 'seller' and backendUserRole != 'admin' %} d-none {% endif %}">
                 <a href="/admin/acustomers" class="nav-link text-white {% if itemactive == 3 %} active {% endif %}">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                     Customers
                 </a>
             </li>
+            <li class="{% if backendUserRole != 'admin' %} d-none {% endif %}">
+                <a href="/admin/aworkers" class="nav-link text-white {% if itemactive == 4 %} active {% endif %}">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                    Workers
+                </a>
+            </li>
         </ul>
+        <a class="nav-link px-3 mb-5 text-decoration-none text-warning" href="/admin/authorization/signout">Sign out</a>
 
     </div>
     <div class="w-100">

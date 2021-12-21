@@ -69,7 +69,7 @@ class aorders extends Controller {
         }
 
         View::renderTemplate('Admin/aordergroup.html', [
-            'itemactive' => 2,
+            'itemactive' => 1,
             'orderGroupId' => $id,
             'products' => $products,
             'client' => (array) $client

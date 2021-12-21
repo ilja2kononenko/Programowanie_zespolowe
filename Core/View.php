@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use App\Controllers\Admin\Backenduser;
 use App\Controllers\User;
 
 /**
@@ -63,6 +64,14 @@ class View
                 "email" => $loggedUser->email,
                 "password" => $loggedUser->password,
             );
+        }
+
+        $isBackendUserLogged = Backenduser::getUserIsLoggedIn();
+
+        if ($isBackendUserLogged) {
+            $args["backendUserRole"] = Backenduser::getLoggedUserInstance()['status'];
+
+
         }
 
         $args["isUserLoggedIn"] = $isUserLogged;

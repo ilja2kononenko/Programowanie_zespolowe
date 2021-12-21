@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\User;
 use App\Models\AdminModels\AdminModel;
 use App\Models\Post;
 use Core\View;
@@ -41,22 +42,41 @@ class Authorization extends Controller {
     }
 
     public function loginToSystemAction () {
+
         if ($_POST != null) {
 
             $postValues = $_POST;
-            $loginValues = AdminModel::getLoginAdminData()[0];
+            $workers = Backenduser::getAllWorkers();
 
-            Utils::custom_var_dump($postValues);
-            Utils::custom_var_dump($loginValues);
+//            Utils::custom_var_dump($postValues);
+//            Utils::custom_var_dump($users);
 
-            Backenduser::setLoggedBackendUserInstance();
+            foreach ($workers as $worker) {
+                if ($postValues['login'] === $worker['login'] && $postValues['password'] === $worker['password']) {
 
-            if ($postValues['login'] === $loginValues['login'] && $postValues['password'] === $loginValues['password']) {
-                header("Location: http://localhost/Admin/amain");
+                    Backenduser::setLoggedBackendUserInstance($worker);
+
+                    header("Location: http://localhost/Admin/amain");
+                }
             }
 
+            View::renderTemplate('admin/Authorization.html', [
+                "post" => $_POST,
+                "error" => "Wrong login or password!"
+            ]);
+
             unset($_POST);
+
+        } else {
+            View::renderTemplate('admin/Authorization.html', []);
         }
-        //View::renderTemplate('AdminModel/Authorization.html', []);
+
+    }
+
+    public function signOutAction () {
+
+        Backenduser::setLoggedBackendUserInstance(null);
+
+        header("Location: http://localhost/Admin/amain");
     }
 }

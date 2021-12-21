@@ -1,0 +1,51 @@
+{% extends "Adminbase.html" %}
+
+{% block title %}Customers{% endblock %}
+
+{% block body %}
+
+<div class="ms-3 mt-3">
+  <a href="aworkers/add" class="btn btn-success">Add worker</a>
+</div>
+
+<div class="table-responsive w-100 ps-3 pt-3">
+  <table class="table table-striped table-sm">
+    <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">login</th>
+      <th scope="col">password</th>
+      <th scope="col">status</th>
+      <th scope="col">actions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for worker in workers %}
+
+    <tr>
+      <td>
+        {{worker.id}}
+      </td>
+      <td>
+        {{worker.login}}
+      </td>
+      <td>
+        {{worker.password}}
+      </td>
+      <td>
+        {{worker.status}}
+      </td>
+      <td>
+        <a href="aworkers/edit/{{worker.id}}" class="btn btn-warning">Edit</a>
+        <a href="aworkers/delete/{{worker.id}}" type="button" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
