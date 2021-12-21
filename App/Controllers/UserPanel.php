@@ -25,6 +25,7 @@ class UserPanel extends Controller {
         }
 
         View::renderTemplate('UserPanel/purchaseHistory.html', [
+            'orderGroups' => (array) $userOrderGroups,
             'boughtItems' => $boughtItems,
         ]);
     }
