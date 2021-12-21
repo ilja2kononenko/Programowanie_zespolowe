@@ -43,6 +43,12 @@ class Cart extends Controller {
         }
 
         $productIdsInUserCart = User::getUserCart();
+
+        if ($productIdsInUserCart == null || sizeof($productIdsInUserCart) == 0) {
+            header("Location: http://localhost/cart");
+            return;
+        }
+
         $userCart = [];
         $sum = 0;
 
@@ -67,7 +73,9 @@ class Cart extends Controller {
 
             User::clearUserCart();
 
-            header("Location: http://localhost");
+            View::renderTemplate('Cart/thanks.html', [
+
+            ]);
             return;
         } else {
             View::renderTemplate('Cart/index.html', [
